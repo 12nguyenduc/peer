@@ -1,19 +1,18 @@
-import * as http from "http";
-import express from "express";
-import { ExpressPeerServer } from "peer";
+const express = require('express');
+const { ExpressPeerServer } = require('peer');
 
 const app = express();
-const server = http.createServer(app);
 
-// peerjs
+app.get('/', (req, res, next) => res.send('Hello world!'));
+
+const server = app.listen(9000);
+
 const peerServer = ExpressPeerServer(server, {
-    proxied: true,
-    path: "/"
+    debug: true,
+    path: '/peerjs'
 });
-app.use("/peerjs", peerServer);
 
-const PORT = process.env.PORT || 5000;
-server.listen(PORT);
+app.use('/myapp', peerServer);
 
 
 module.exports = app;
