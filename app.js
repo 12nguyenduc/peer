@@ -3,16 +3,14 @@ const { ExpressPeerServer } = require('peer');
 
 const app = express();
 
-app.get('/', (req, res, next) => res.send('Hello world!'));
-
-const server = app.listen(9000);
-
+// peerjs
 const peerServer = ExpressPeerServer(server, {
-    debug: true,
-    path: '/peerjs'
+    proxied: true,
+    path: "/"
 });
+app.use("/peerjs", peerServer);
 
-app.use('/myapp', peerServer);
-
+const PORT = process.env.PORT || 5000;
+server.listen(PORT);
 
 module.exports = app;
