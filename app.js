@@ -1,7 +1,9 @@
-const express = require('express');
-const { ExpressPeerServer } = require('peer');
+const http = require( "http");
+const express = require( "express");
+const ExpressPeerServer = require("peer").ExpressPeerServer;
 
 const app = express();
+const server = http.createServer(app);
 
 // peerjs
 const peerServer = ExpressPeerServer(server, {
@@ -12,5 +14,3 @@ app.use("/peerjs", peerServer);
 
 const PORT = process.env.PORT || 5000;
 server.listen(PORT);
-
-module.exports = app;
